@@ -56,7 +56,7 @@ jobs:
             dotnet tool install dotnet-ef
 
     - name: dotnet publish
-      run: echo $(foo_output = dotnet publish ./Ecommerce.sln -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}) >> $GITHUB_OUTPUT
+      run: echo $(dotnet publish ./Ecommerce.sln -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}) >> $GITHUB_OUTPUT
       id: publish_output
       
     - name: Echo output
