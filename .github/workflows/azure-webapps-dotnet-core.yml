@@ -56,11 +56,11 @@ jobs:
             dotnet tool install dotnet-ef
 
     - name: dotnet publish
-      run: echo $(dotnet publish ./Ecommerce.sln -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}) >> $GITHUB_OUTPUT
+      run: echo "publishedOutput = dotnet publish ./Ecommerce.sln -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}" >> $GITHUB_OUTPUT
       id: publish_output
       
     - name: Echo output
-      run: echo ${{ steps.publish_output.outputs.output1 }}
+      run: echo ${{ steps.publish_output.outputs.publishedOutput }}
 
     - name: Generate scripts
       run: dotnet ef migrations script --idempotent --output  ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/sql/sql-script.sql
