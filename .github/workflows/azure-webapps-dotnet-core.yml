@@ -59,7 +59,7 @@ jobs:
         run: dotnet build ./Ecommerce.sln --configuration Release 
 
       - name: Install EF Tool
-      	run: |
+        run: |
             dotnet new tool-manifest
             dotnet tool install dotnet-ef
 
@@ -67,7 +67,7 @@ jobs:
         run: dotnet publish ./Ecommerce.sln -c Release -o '${{env.AZURE_WEBAPP_PACKAGE_PATH}}'
 
       - name: Generate scripts
-      run: dotnet ef migrations script --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql --idempotent --context ApplicationDbContext --no-build
+        run: dotnet ef migrations script --output ${{env.DOTNET_ROOT}}/sql/sql-script.sql --idempotent --context ApplicationDbContext --no-build
 
       - name: Azure SQL Deploy
       uses: Azure/sql-action@v1
