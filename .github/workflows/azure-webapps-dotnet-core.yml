@@ -38,7 +38,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
     
     - name: 'Checkout Github Action' 
       uses: actions/checkout@v3
@@ -65,7 +64,13 @@ jobs:
             dotnet tool install dotnet-ef
 
     - name: dotnet publish
-      run: dotnet publish ./Ecommerce.sln -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
+      outputs:
+              output1: ${{ steps.step1.outputs.test }}
+      run: echo $(foo_output = dotnet publish ./Ecommerce.sln -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}) >> $GITHUB_OUTPUT
+      id: publish_output
+      
+    - name: Echo output
+      run: echo ${{ steps.publish_output.outputs.foo_output }}
 
     - name: Generate scripts
       run: dotnet ef migrations script --idempotent --output  ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/sql/sql-script.sql
