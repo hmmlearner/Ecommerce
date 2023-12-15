@@ -60,7 +60,7 @@ jobs:
       id: publish_output
       
     - name: Echo output
-      run: echo ${{ steps.publish_output.outputs.foo_output }}
+      run: echo ${{ steps.publish_output.outputs.output1 }}
 
     - name: Generate scripts
       run: dotnet ef migrations script --idempotent --output  ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/sql/sql-script.sql
