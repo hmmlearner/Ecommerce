@@ -38,22 +38,14 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    - name: 'Checkout Github Action' 
-      uses: actions/checkout@v3
+
+    steps:
+    - uses: actions/checkout@v3
 
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v3
       with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-
-    - name: Set up dependency caching for faster builds
-      uses: actions/cache@v3
-      with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
 
     - name: Build with dotnet
       run: dotnet build ./Ecommerce.sln --configuration Release 
@@ -64,8 +56,6 @@ jobs:
             dotnet tool install dotnet-ef
 
     - name: dotnet publish
-      outputs:
-              output1: ${{ steps.step1.outputs.test }}
       run: echo $(foo_output = dotnet publish ./Ecommerce.sln -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}) >> $GITHUB_OUTPUT
       id: publish_output
       
