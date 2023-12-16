@@ -63,7 +63,7 @@ jobs:
       run: |
            cd Ecommerce
            dir
-           dotnet ef migrations script --output ${{env.WORKING_DIRECTORY}}\sql-script.sql --idempotent --context DataContext --configuration Release
+           dotnet ef migrations script --output ${{env.WORKING_DIRECTORY}}\sql-script.sql --idempotent --context ApplicationDbContext --configuration Release
     - name: listfiles
       run: dir ${{env.WORKING_DIRECTORY}}
 
