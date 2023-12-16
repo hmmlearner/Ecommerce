@@ -75,7 +75,7 @@ jobs:
         # The connection string, including authentication information, for the Azure SQL Server database.
         connection-string: ${{ secrets.CONNECTION_STRING }}
         # Path to SQL script file to deploy
-        sql-file: ${{env.WORKING_DIRECTORY}}\sql-script.sql
+        sql-file: ${{env.WORKING_DIRECTORY}}\Ecommerce\sql-script.sql
 
     - name: dotnet publish
       run: dotnet publish ./Ecommerce.sln -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
