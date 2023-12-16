@@ -25,7 +25,7 @@ env:
   AZURE_WEBAPP_NAME: Ecommercewindows    # set this to the name of your Azure Web App
   AZURE_WEBAPP_PACKAGE_PATH: .\published      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '7.0.x'                 # set this to the .NET Core version to use
-  WORKING_DIRECTORY: Ecommerce
+  WORKING_DIRECTORY: SQLScript
 
 on:
   push:
@@ -65,7 +65,7 @@ jobs:
            dir
            dotnet ef migrations script --output ${{env.WORKING_DIRECTORY}}\sql-script.sql --idempotent --context DataContext --configuration Release --no-build
     - name: listfiles
-      run: dir ${{env.WORKING_DIRECTORY}}/Ecommerce
+      run: dir ${{env.WORKING_DIRECTORY}}
 
     - name: Azure SQL Deploy
       uses: Azure/sql-action@v1
@@ -75,7 +75,7 @@ jobs:
         # The connection string, including authentication information, for the Azure SQL Server database.
         connection-string: ${{ secrets.CONNECTION_STRING }}
         # Path to SQL script file to deploy
-        sql-file: ${{env.WORKING_DIRECTORY}}\sql-script.sql
+        sql-file: ${{env.WORKING_DIRECTORY}}/sql-script.sql
 
     - name: dotnet publish
       run: dotnet publish ./Ecommerce.sln -c Release -o ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
