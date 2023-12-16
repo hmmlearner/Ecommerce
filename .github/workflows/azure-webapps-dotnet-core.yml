@@ -63,7 +63,7 @@ jobs:
       #run: dotnet ef migrations script --idempotent --output  ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/sql/sql-script.sql
       run: |
            cd Ecommerce
-           dotnet ef migrations script --output ${{env.DOTNET_ROOT}}\sql\sql-script.sql --idempotent --context DataContext
+           dotnet ef migrations script --output ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/sql/sql-script.sql --idempotent --context DataContext
 
     - name: Azure SQL Deploy
       uses: Azure/sql-action@v1
@@ -73,7 +73,7 @@ jobs:
         # The connection string, including authentication information, for the Azure SQL Server database.
         connection-string: ${{ secrets.CONNECTION_STRING }}
         # Path to SQL script file to deploy
-        sql-file: ${{env.DOTNET_ROOT}}\sql\sql-script.sql
+        sql-file: ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/sql/sql-script.sql
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
