@@ -65,7 +65,7 @@ jobs:
            dir
            dotnet ef migrations script --output ${{env.WORKING_DIRECTORY}}\sql-script.sql --idempotent --context DataContext --configuration Release --no-build
     - name: listfiles
-      run: dir ${{env.WORKING_DIRECTORY}} /s
+      run: dir ${{env.WORKING_DIRECTORY}}/Ecommerce
 
     - name: Azure SQL Deploy
       uses: Azure/sql-action@v1
