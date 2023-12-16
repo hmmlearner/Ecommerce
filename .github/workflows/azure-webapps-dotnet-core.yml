@@ -63,7 +63,7 @@ jobs:
       #run: dotnet ef migrations script --idempotent --output  ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/sql/sql-script.sql
       run: |
            cd Ecommerce
-           dotnet ef migrations script --output ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/sql/sql-script.sql --idempotent --context DataContext
+           dotnet ef migrations script --output ${{env.AZURE_WEBAPP_PACKAGE_PATH}}/sql-script.sql --idempotent --context DataContext --no-build
     - name: listfiles
       run: dir ${{env.AZURE_WEBAPP_PACKAGE_PATH}}
 
