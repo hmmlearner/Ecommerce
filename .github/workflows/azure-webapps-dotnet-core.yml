@@ -67,6 +67,11 @@ jobs:
     - name: listfiles
       run: dir ${{env.WORKING_DIRECTORY}}\Ecommerce
 
+    - name: Azure Login
+      uses: Azure/login@v1
+      with:
+        creds: ${{secrets.AZURE_CREDENTIALS}}
+
     - name: Azure SQL Deploy
       uses: Azure/sql-action@v1
       with:
