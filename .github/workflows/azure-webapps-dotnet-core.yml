@@ -17,7 +17,7 @@
 # For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
 
-# My notes : in step 'Build with dotnet' we are going to restore the solution too
+# My notes : in step 'Build with dotnet' we are going to restore the solution too 
 
 name: Build and deploy ASP.Net Core app to an Azure Web App
 
