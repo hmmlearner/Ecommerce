@@ -23,9 +23,9 @@ name: Build and deploy ASP.Net Core app to an Azure Web App
 
 env:
   AZURE_WEBAPP_NAME: Ecommercewindows    # set this to the name of your Azure Web App
-  AZURE_WEBAPP_PACKAGE_PATH: './publish'      # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_PACKAGE_PATH: .\publish      # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '7.0.x'                 # set this to the .NET Core version to use
-
+  WORKING_DIRECTORY: .\published\sql
 
 on:
   push:
@@ -64,7 +64,7 @@ jobs:
       run: |
            cd Ecommerce
            dir
-           dotnet ef migrations script --output ${{env.DOTNET_ROOT}}/sql-script.sql --idempotent --context DataContext --configuration Release
+           dotnet ef migrations script --output ${{env.WORKING_DIRECTORY}}\sql-script.sql --idempotent --context DataContext --configuration Release
     - name: listfiles
       run: dir ${{env.DOTNET_ROOT}}
 
@@ -76,7 +76,7 @@ jobs:
         # The connection string, including authentication information, for the Azure SQL Server database.
         connection-string: ${{ secrets.CONNECTION_STRING }}
         # Path to SQL script file to deploy
-        sql-file: ${{env.DOTNET_ROOT}}/sql/sql-script.sql
+        sql-file: ${{env.WORKING_DIRECTORY}}\sql-script.sql
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
