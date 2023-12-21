@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Ecommerce.Data;
 using Ecommerce.DTO.Category;
+using Ecommerce.DTO.Product;
 using Ecommerce.Interfaces;
 using Ecommerce.Models;
 
@@ -27,11 +28,11 @@ namespace Ecommerce.Services
             return serviceReponse;
         }
 
-        public async Task<ServiceResponse<List<Category>>> GetAllCategories()
+        public async Task<ServiceResponse<List<CategoryRetrieveDto>>> GetAllCategories()
         {
-            var serviceResponse = new ServiceResponse<List<Category>>();
+            var serviceResponse = new ServiceResponse<List<CategoryRetrieveDto>>();
             var categories = await _dataContext.Categories.ToListAsync();
-            serviceResponse.Data = categories;
+            serviceResponse.Data = categories.Select(x => _mapper.Map<CategoryRetrieveDto>(x)).ToList(); ;
             return serviceResponse;
         }
 

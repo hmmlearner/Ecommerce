@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Typography, Divider, Container, Paper } from "@material-ui/core";
+import { Typography, Divider, Container, Paper, Button } from "@material-ui/core";
 
 const NotFoundError = () => {
  /*   const error = useRouterError();*/

@@ -21,6 +21,11 @@ namespace Ecommerce.Controllers
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
         }
+
+
+       
+
+
         [Route("{name}")]
         [HttpGet]
         public async Task<ActionResult<ServiceResponse<CategoryRetrieveDto>>> GetCategory(string name)
@@ -64,6 +69,25 @@ namespace Ecommerce.Controllers
                 return BadRequest($"Failed to retrieve category {ex.Message}");
             }
         }
+
+
+        [Route("All")]
+        [HttpGet]
+        public async Task<ActionResult<ServiceResponse<CategoryRetrieveDto>>> GetAllCategories()
+        {
+            try
+            {
+                var categoriesResponse = await _categoryRepository.GetAllCategories();
+
+                return categoriesResponse == null ? NotFound() : Ok(categoriesResponse);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical($"Failed to retrieve category {ex.Message}");
+                return BadRequest($"Failed to retrieve category {ex.Message}");
+            }
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<CategoryRetrieveDto>>> CreateProduct([FromBody] CategoryCreateDto categorydto)

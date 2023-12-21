@@ -8,6 +8,6 @@ namespace Ecommerce.Interfaces
         public Task<ServiceResponse<Category>> GetCategoryById(int id);
         public Task<ServiceResponse<CategoryRetrieveDto>> CreateCategory(CategoryCreateDto product);
         public Task<ServiceResponse<CategoryRetrieveDto>> GetCategoryByName(string categoryName);
-        public Task<ServiceResponse<List<Category>>> GetAllCategories();
+        public Task<ServiceResponse<List<CategoryRetrieveDto>>> GetAllCategories();
     }
 }
