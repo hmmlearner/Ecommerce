@@ -17,15 +17,15 @@ namespace Ecommerce.Models
 
         [Required]
         [Range(1, 10000)]
-        [Display(Name = "Price for 1-50")]
+        [Display(Name = "Price")]
         public double Price { get; set; } 
 
         [Range(1, 10000)]
-        [Display(Name = "Price for 51-100")]
+        [Display(Name = "Sale Price")]
         public double SalePrice { get; set; } 
 
         [Range(1, 10000)]
-        [Display(Name = "Price for 100+")]
+        [Display(Name = "Was Price")]
         public double WasPrice { get; set; }
         [ValidateNever]
         public string ImageUrl { get; set; } 
@@ -34,6 +34,9 @@ namespace Ecommerce.Models
         [ForeignKey("CategoryId")]
         public int CategoryId { get; set; }
 
+        //add Inventory with range 0-1000
+        [Range(0, 10000)]
+        public int Inventory { get; set; }
 
         //public Category Category { get; set; }
         public DateTime CreatedDate { get; set; }   

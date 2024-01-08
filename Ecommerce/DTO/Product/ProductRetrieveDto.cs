@@ -20,6 +20,7 @@ namespace Ecommerce.DTO.Product
         public string ImageUrl { get; set; } 
         public int CategoryId { get; set; }
         public string Category { get; set; } 
+        public int Inventory { get; set; }
 
     }
 }

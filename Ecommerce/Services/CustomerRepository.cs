@@ -142,5 +142,10 @@ namespace Ecommerce.Services
             //_configuration
         }
 
+        //public void CustomerLogout()
+        //{
+        //    //code to logout customer
+
+        //}
     }
 }

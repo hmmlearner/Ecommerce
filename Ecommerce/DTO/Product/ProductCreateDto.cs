@@ -14,15 +14,15 @@ namespace Ecommerce.DTO.Product
 
         [Required]
         [Range(1, 10000)]
-        [Display(Name = "Price for 1-50")]
+        [Display(Name = "Price")]
         public double Price { get; set; }
 
         [Range(1, 10000)]
-        [Display(Name = "Price for 51-100")]
+        [Display(Name = "Sale Price")]
         public double SalePrice { get; set; }
 
         [Range(1, 10000)]
-        [Display(Name = "Price for 100+")]
+        [Display(Name = "Was Price")]
         public double WasPrice { get; set; }
         [ValidateNever]
         public string ImageUrl { get; set; }
@@ -30,5 +30,8 @@ namespace Ecommerce.DTO.Product
         [ForeignKey("CategoryId")]
         [ValidateNever]
         public int CategoryId { get; set; }
+        [Range(1, 10000)]
+        [Display(Name = "Inventory")]
+        public int Inventory { get; set; }
     }
 }

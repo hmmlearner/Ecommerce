@@ -38,6 +38,7 @@ namespace Ecommerce.Controllers
 
         [HttpPost]
         [Route("Login")]
+        //prathimac@gmail.com, Test_12
         public async Task<ActionResult<ServiceResponse<CustomerRetrieveDto>>> CustomerLogin(string username, string password)
         {
             try
@@ -51,5 +52,23 @@ namespace Ecommerce.Controllers
                 return Unauthorized($"Invalid Credentials { ex.Message}");
             }
         }
+
+        ////Create CustomerLogout API method
+        //[HttpPost]
+        //[Route("Logout")]
+        //public async IActionResult CustomerLogout()
+        //{
+        //    try
+        //    {
+        //        var logoutCustomerReponse = await _customerRepository.CustomerLogout();
+        //        return Ok(new { message = "Logout successful" });
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Unauthorized($"Invalid Credentials { ex.Message}");
+        //    }
+        //}
+
     }
 }

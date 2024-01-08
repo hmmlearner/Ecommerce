@@ -1,8 +1,11 @@
-const HeaderCartButton = () => {
+import Button from '@mui/material/Button';
+const HeaderCartButton = ({onOpenModal}) => {
+    const handleOpenCartClick = () => onOpenModal(true);
   return (
-    <button>
-      Cart
-    </button>
+      <p>
+          {/*<button onClick={handleOpenCartClick}>Cart ({cartQuantity})</button>*/}
+          <Button onClick={handleOpenCartClick}>Cart</Button>
+      </p>
   );
 }
 

@@ -12,6 +12,8 @@ namespace Ecommerce.Interfaces
         public Task<ServiceResponse<Customer>> UpdateCustomer(Customer customer);
         public Task<ServiceResponse<CustomerRetrieveDto>> CustomerLogin(string email, string password);
 
+        //public void CustomerLogout();
+
         public Task<bool> CustomerExists(string email);
 
     }

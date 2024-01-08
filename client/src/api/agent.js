@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { Agent, request } from "https";
-import { router } from "../router/Routes";
+/*import { Agent, request } from "https";*/
+/*import { router } from "../router/Routes";*/
 
 const sleep = () => new Promise(resolve => setTimeout(resolve, 500));
 
@@ -40,7 +40,7 @@ axios.interceptors.response.use(async response => {
 })
 
 const requests = {
-    get: (url) => axios.get(url).then(responseBody),
+    get: (url) => axios.get(url).then(responseBody => console.log(responseBody)),
     post: (url, body) => axios.post(url, body).then(responseBody),
     put: (url, body) => axios.put(url, body).then(responseBody),
     delete: (url) => axios.delete(url).then(responseBody),
@@ -48,16 +48,26 @@ const requests = {
 
 
 const Catalogue = {
-    list: (name) => {
-        console.log(`Name: ${name}`);
-        requests.get(`category/${name}`)
+    list: () => {
+        //console.log(`Name: ${name}`);
+        //requests.get(`category/${name}`)
+        requests.get("category/all")
     },
     details: (name) =>  requests.get(`category/${name}/products`) 
+}
+
+const Category = {
+    list: () => {
+        console.log("Category list");
+        requests.get("category/all")
+    },
+    details: (name) => requests.get(`category/${name}/products`)
 }
 
 
 const agent = {
     Catalogue,
+    Category
 }
 
 export default agent; 
