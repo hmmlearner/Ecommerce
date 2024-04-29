@@ -13,17 +13,20 @@
         justify-content: space-between;
         align-items: center;
         padding: 0.5rem 1rem;
-        background: #fbd392;
+        background: #92C6F8FF;
         border-radius: 5px;
         font-size: 0.9rem;
     }
 
+
 .cart_item_actions {
-    font-size: 1rem;
     display: flex;
     gap: 0.5rem;
-    align-items: center;
+    flex: 1 200px;
+    justify-content: right;
+
 }
+
 
     .cart_item_actions button {
         background: transparent;
@@ -35,7 +38,7 @@
     }
 
         .cart_item_actions button:hover {
-            background: #f5b744;
+            background: #3956EDFF;
         }
 
         .cart_item_actions button:first-of-type {
@@ -44,4 +47,36 @@
 
 .cart_total_price {
     text-align: right;
+}
+
+
+.checkoutButton {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #3956EDFF;
+    zbackground: linear-gradient(#3956EDFF, #4C030359);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+.item{
+    width:100%;
+}
+.item_details {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.item_title {
+    flex: 1 200px;
+}
+.item_price {
+    flex: 1;
 }

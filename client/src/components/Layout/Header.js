@@ -1,97 +1,62 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import classes from "./Header.module.css";
-import HeaderCartButton from "./HeaderCartButton";
-import { NavLink, useRouteLoaderData } from "react-router-dom";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import { NavLink } from "react-router-dom";
 import CartModal from "../../pages/cart/CartModal";
 import Button from '@mui/material/Button';
+/*import { createTheme, ThemeProvider } from "@mui/material/styles";*/
 import CartContext from "../../context/cart-context";
 import CustomerContext from "../../context/customer-context";
 import LoginModal from "../../pages/login/LoginModal";
+import SignupModal from "../../pages/login/SignupModal";
 import { removeAuthToken } from "../../utils/AuthService";
 import agent from "../../api/agent";
+import Logo from "../../assets/logo.png";
+
+//const theme = createTheme({
+//    palette: {
+//        primary: blue,
+//        secondary: "#090150FF"
+//    }
+//});
 
 const Header = () => {
-    const { totalItems } = useContext(CartContext);
+
+    //const customclasses = {
+
+    //    inactiveLink: 'inactive-link-class',
+    //    active: 'active-class',
+    //};
+
+    const cartCtx = useContext(CartContext);
     //const { loggedIn, name } = useContext(CustomerContext);
     const customerCtx = useContext(CustomerContext);
+
+    console.log("CustomerContext in Header " + JSON.stringify(customerCtx));
     const loggedIn = customerCtx.loggedIn;
     const name = customerCtx.name;
     const [categories, setCategories] = useState([]);
 
     const modal = useRef();
     const loginModal = useRef();
+    const signUpModal = useRef();
     const fetchCategoriesAsync = async () => {
         console.log("fetchCategoriesAsync ");
-         //await agent.Category.list()
-         //       .then((response) => {
-         //           console.log("PRD DATA " + response);
-         //           setCategories(response.data);
-         //       })
-         //       .catch(function (error) {
-         //           console.log("Error " + error.message);
-         //           return error
-         //       });
 
-/*        try {
+       try {
             const response = await agent.Category.list()
-            console.log(response);
+           console.log(response);
+           setCategories(response.data);
         } catch (error) {
             console.error(error);
-        }*/
-
-
-      
-        try {
-            axios.get(`https://localhost:7056/api/category/all`)
-                .then((response) => {
-                    console.log('response.data ' + response.data);
-                    console.log(response.data.statusCode);
-                    console.log(response.data);
-                    console.log(response.headers);
-                    console.log(response.config);
-                    setCategories(response.data.data);
-                    console.log("in fetchCategoriesAsync " + categories);
-                })
-                .catch(error => console.error('Error fetching categories', error.message));
         }
-        catch (error) {
-            console.log("Error " + error.message);
-        }
+
     };
 
     useEffect(() => {
-    
-        fetchCategoriesAsync();
-        /*
-        const fetchData = async () => {
-            let eod;
-            await agent.Catalogue.list()
-                .then((response) => {
-                    console.log("PRD DATA " + response.data.data);
-                    eod = response.data.data;
-                    setCategories(response.data.data);
-                })
-                .catch(function (error) {
-                    console.log("Error " + error.message);
-                    return error
-                });
-        };
-
-        // Call the fetchData function when the component mounts
-        fetchData();
-        */
-
-        console.log("in effect " + categories);
+         fetchCategoriesAsync();
     }, []);
 
-    //useEffect(() => {
-    //    // Your logic here that depends on yourValue
-    //    console.log('Effect triggered. YourValue:', loggedIn);
-
-    //}, [loggedIn, name]); // Add yourValue as a dependency to the useEffect
-
-
+    const isNavLinkActive = (match, location) => !match;
     const openCartHandler = () => {
         // Call the onOpen method from the child component
         modal.current.onOpen();
@@ -100,35 +65,48 @@ const Header = () => {
         // Call the onOpen method from the child component
         loginModal.current.onOpen();
     };
+    const openSignUpHandler = () => {
+        // Call the onOpen method from the child component
+        signUpModal.current.onOpen();
+    };
 
     const logoutHandler = () => {
         removeAuthToken();
         // Call the onOpen method from the child component
         customerCtx.logOut();
-    };
+        // Update CartCtx here to clear cart
+        cartCtx.clearCart();
+    }
+
+
 
     return (
         <>
 
             <CartModal ref={modal} />
             <LoginModal ref={loginModal} />
+            <SignupModal ref={signUpModal} />
             <header className={classes.header}>
                 <div className={classes.title}>
-                    <img src="logo.png" alt="EcommerceStore" className={classes.headerimage} />
-                    <h1>Ecommerce Store</h1>
+                    <NavLink isactive={isNavLinkActive} className={classes.logoName} end to="/">
+                        <img src={Logo} alt="EcommerceStore" className={classes.headerimage} />
+                        <h1>Ecommerce Store</h1>
+                    </NavLink>
                 </div>
-                {loggedIn ? <Button onClick={logoutHandler}> Log out</Button> : <Button onClick={openLoginHandler}> Login</Button>}
-                
-                <Button onClick={openCartHandler}>Cart ({totalItems})</Button>
-                <nav>
-                    <ul>
+                <div className={classes.headerleft}>
+                    {loggedIn ? <div>Hi, {customerCtx.name} <Button color="secondary" onClick={logoutHandler}> Log out</Button></div> : <div><Button color="secondary" onClick={openLoginHandler}> Login</Button>/<Button color="secondary" onClick={openSignUpHandler}>Sign Up</Button></div>}               
+                    <Button color="secondary" onClick={openCartHandler}>Cart ({cartCtx.totalItems})</Button>
+                </div>
+            </header> 
+            <nav className={classes.nav}>
+                    <ul className={classes.ul}>
 
-                        {categories.map(item => (<li key={item.id}>
+                    {categories.map(item => (<li className={classes.li} key={item.id}>
                             <NavLink className={({ isActive }) => isActive ? classes.active : undefined} end to={`/category/${item.name}`}>{item.name}</NavLink>
                         </li>))}
                     </ul>
                 </nav>
-            </header>
+        
 
 
 

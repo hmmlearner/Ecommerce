@@ -1,4 +1,5 @@
 ﻿using Ecommerce.DTO.Customer;
+using Ecommerce.DTO.ShoppingCart;
 using Ecommerce.Models;
 
 namespace Ecommerce.Interfaces
@@ -14,6 +15,7 @@ namespace Ecommerce.Interfaces
 
         //public void CustomerLogout();
 
+        public Task<ServiceResponse<CustomerRetrieveDto>> RetrieveCustomer();
         public Task<bool> CustomerExists(string email);
 
     }

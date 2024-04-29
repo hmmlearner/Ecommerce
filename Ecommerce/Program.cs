@@ -11,13 +11,13 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Swashbuckle.AspNetCore.Filters;
 using Microsoft.OpenApi.Models;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 // Add services to the container.
-//builder.Services.Configure<ConnectionOptions>(builder.Configuration.GetSection("ConnectionStrings"));
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddControllers();
@@ -43,7 +43,6 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
@@ -56,7 +55,7 @@ builder.Services.AddSwaggerGen(c =>
     c.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
-//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(
@@ -72,13 +71,11 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-//}
 
-//app.UseHttpsRedirection();
+app.UseSwagger();
+app.UseSwaggerUI();
+
+
 app.UseCors();
 
 app.UseAuthentication();
@@ -86,5 +83,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+StripeConfiguration.ApiKey = "sk_test_51OZ1gKJokwjQRWN4SZlmf9cacW8bA6B12fdUBsxuMQaFcsGIz2sDdVqKthHSYjOkI3cmxl8J1Crom5Ji59kSUgHZ00J0Y3C7uQ";
 
 app.Run();

@@ -13,7 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\components\" />
+    <Folder Include="src\NewFolder\" />
     <Folder Include="src\utils\" />
-    <Folder Include="src\pages\login\" />
   </ItemGroup>
 </Project>

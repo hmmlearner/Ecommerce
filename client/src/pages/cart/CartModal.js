@@ -2,7 +2,8 @@ import React, { useState, useEffect, useImperativeHandle, forwardRef, useRef } f
 import Box from '@mui/material/Box';
 import Cart from './Cart';
 import Typography from '@mui/material/Typography';
-import {Button, Modal, Backdrop, Fade } from '@material-ui/core'
+import { Button, Modal, Backdrop, Fade } from '@material-ui/core';
+import classes from "./CartModal.module.css";
 
 const style = {
     position: 'absolute',
@@ -45,8 +46,10 @@ const CartModal = forwardRef(({ cartOpen }, ref) => {
                 ref={modal}
             >
                 <Box sx={style}>
-                    <Cart />
-                    <Button onClick={handleClose}>Close</Button>
+                    <div className={classes.cartContainer}>
+                        <Button className={classes.closeButton} onClick={handleClose}>X</Button>
+                    <Cart cartClose={handleClose} />
+                   </div>
                 </Box>
 
             </Modal>

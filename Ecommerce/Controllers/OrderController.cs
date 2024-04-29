@@ -24,12 +24,35 @@ namespace Ecommerce.Controllers
 
         [Route("OrderConfirmation")]
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<OrderRetrieveDto>>> OrderConfirmation()
+        public async Task<ActionResult<ServiceResponse<OrderRetrieveDto>>> OrderConfirmation(int orderNumber, string sessionid)
         {
             try
             {
-                var orderConfirmationReponse = await _orderRepository.OrderConfirmation();
+                var orderConfirmationReponse = await _orderRepository.OrderConfirmation(orderNumber, sessionid);
                 return (orderConfirmationReponse == null) ? BadRequest("Couldn't submit order") : Ok(orderConfirmationReponse);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Couldn't submit order {ex.InnerException}");
+            }
+        }
+        [Route("OrderSubmit")]
+        [HttpPost]
+        public async Task<ActionResult<ServiceResponse<string>>> OrderSubmit()
+        {
+            try
+            {
+                var orderConfirmationReponse = await _orderRepository.SubmitPayment();
+                if (orderConfirmationReponse.Success == true)
+                {
+                    HttpContext.Response.Headers.Add("Location", orderConfirmationReponse.Data.ToString());
+                    return Ok(orderConfirmationReponse);
+                }
+                else
+                {
+                    return BadRequest(orderConfirmationReponse);
+                }
 
             }
             catch (Exception ex)
@@ -40,11 +63,11 @@ namespace Ecommerce.Controllers
 
         [Route("RetrieveOrder")]
         [HttpGet]
-        public async Task<ActionResult<ServiceResponse<OrderRetrieveDto>>> RetrieveOrder(int ordernumber)
+        public async Task<ActionResult<ServiceResponse<OrderRetrieveDto>>> RetrieveOrder(int orderNumber)
         {
             try
             {
-                var orderReponse = await _orderRepository.RetrieveOrder(ordernumber);
+                var orderReponse = await _orderRepository.RetrieveOrder(orderNumber);
                 return (orderReponse == null) ? BadRequest("Couldn't retrieve order") : Ok(orderReponse);
 
             }

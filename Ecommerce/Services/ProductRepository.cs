@@ -19,10 +19,10 @@ namespace Ecommerce.Services
             _dataContext = dataContext;
             _mapper = mapper;
         }
-        public async Task<ServiceResponse<ProductRetrieveDto>> CreateProduct(ProductCreateDto productdto)
+        public async Task<ServiceResponse<ProductRetrieveDto>> CreateProduct(ProductCreateDto productDto)
         {
             var serviceReponse = new ServiceResponse<ProductRetrieveDto>();
-            var product = _mapper.Map<Product>(productdto);
+            var product = _mapper.Map<Product>(productDto);
             _dataContext.Products.Add(product);    
             await _dataContext.SaveChangesAsync();
             var newProduct = await _dataContext.Products.SingleOrDefaultAsync(x=>x.Id== product.Id);

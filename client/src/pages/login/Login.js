@@ -2,14 +2,15 @@
 
 import { useContext, useState } from 'react';
 import CustomerContext from '../../context/customer-context';
-import axios from "axios";
 import { setAuthToken } from "../../utils/AuthService";
-
+import agent from "../../api/agent";
+import CartContext from "../../context/cart-context";
+import classes from "./Login.module.css";
 
 const Login = ({ loginClose }) => {
     const customerCtx = useContext(CustomerContext);
     console.log(customerCtx.loggedIn, customerCtx.name);
-
+    const cartCtx = useContext(CartContext);
 
     const [formData, setFormData] = useState({
         username: '',
@@ -30,9 +31,9 @@ const Login = ({ loginClose }) => {
         // Add your logic for handling the login here
         let data;
         try {
-            data = await authenticateCustomer(formData.username, formData.password);
-            console.log('Data outside async/await:', data.data);
-            console.log("After LOG_IN " + (data.success ? true : false));
+            const responsePromise = await authenticateCustomer(formData.username, formData.password);
+            data = await responsePromise;
+            console.log('Data outside data:', data);
 
         } catch (error) {
             console.error('Error outside async/await:', error);
@@ -41,8 +42,7 @@ const Login = ({ loginClose }) => {
 
         setAuthToken(data.data.token);
         customerCtx.logIn(data.success, data.data.name);
-  
-        console.log('Login submitted with:'+ customerCtx.loggedIn, customerCtx.name);
+        cartCtx.retrieveCartData();
         loginClose();
     };
 
@@ -51,21 +51,15 @@ const Login = ({ loginClose }) => {
     //create a function to call login api
     const authenticateCustomer = async (email, password) => {
         // Simulated API call or fetch to add the item to the server
-        let eod;
-
-
         try {
-            const response = await axios.post(`https://localhost:7056/api/customer/Login?username=${email}&password=${password}`);
-            const data = response.data;
-            eod = data;
-            console.log('Data from async/await:', data);
-            return eod;
-
-            // You can work with the data here
+            const response = await agent.Authenticate.login({ email, password });
+            const data = await response;
+            return data;
         } catch (error) {
-            console.error('Error:', error);
+            console.log("Error:", error.message);
             return error;
         }
+
     };
 
 
@@ -77,30 +71,34 @@ const Login = ({ loginClose }) => {
             {customerCtx.loggedIn ? <p>Hello: {customerCtx.name}</p>
                 : <form onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="username">Username:</label>
-                        <input
+                {/*        <label htmlFor="username">Username:</label>*/}
+                        <input 
                             type="text"
                             id="username"
                             name="username"
                             value={formData.username}
                             onChange={handleInputChange}
+                            placeholder="Username"
+                            className={classes.inputField}
                             required
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="password">Password:</label>
+                     {/*   <label htmlFor="password">Password:</label>*/}
                         <input
                             type="password"
                             id="password"
                             name="password"
                             value={formData.password}
                             onChange={handleInputChange}
+                            placeholder="Password"
+                            className={classes.inputField}
                             required
                         />
                     </div>
 
-                    <button type="submit">Login</button>
+                    <button className={classes.loginButton} type="submit">Login</button>
                 </form>}
             
         </div>

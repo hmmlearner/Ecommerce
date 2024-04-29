@@ -11,17 +11,17 @@ namespace Ecommerce.DTO.Order
         public int CustomerId { get; set; }
 
         [Required]
-        public string PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
         [Required]
-        public string ShippingName { get; set; }
+        public string ShippingName { get; set; } = string.Empty;
         [Required]
-        public String ShippingStreetAddress { get; set; }
+        public String ShippingStreetAddress { get; set; } = string.Empty;
         [Required]
-        public string ShippingCity { get; set; }
+        public string ShippingCity { get; set; } = string.Empty;
         [Required]
-        public string ShippingState { get; set; }
+        public string ShippingState { get; set; } = string.Empty;
         [Required]
-        public string ShippingPostCode { get; set; }
+        public string ShippingPostCode { get; set; } = string.Empty;
 
         public string ShippingCountry { get; set; } = "Australia";
 
@@ -30,6 +30,6 @@ namespace Ecommerce.DTO.Order
         public DateTime OrderDate { get; set; }
         public ShippingMethod ShippingMethod { get; set; }
 
-        public List<OrderLine> OrderItems { get; set; }
+        public List<OrderLine> OrderItems { get; set; } = new List<OrderLine>();
     }
 }

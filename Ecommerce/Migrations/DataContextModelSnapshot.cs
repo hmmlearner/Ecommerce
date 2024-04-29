@@ -116,6 +116,9 @@ namespace Ecommerce.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SessionId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ShippingCity")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -233,8 +236,14 @@ namespace Ecommerce.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double>("CartTotal")
+                        .HasColumnType("float");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ShippingMethod")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

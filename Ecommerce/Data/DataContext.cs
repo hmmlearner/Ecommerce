@@ -23,13 +23,6 @@ namespace Ecommerce.Data
 
         public DbSet<OrderLine> OrderLines { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Category>()
-        //           .HasMany<Product>(e => e.Products)
-        //           .WithOne(e => e.Category)
-        //        .HasForeignKey(s => s.CategoryId)
-        //        .IsRequired();
-        //}
+
     }
 }

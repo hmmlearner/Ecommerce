@@ -35,5 +35,7 @@ namespace Ecommerce.Models
 
         public List<OrderLine> OrderItems { get; set; }
 
+        public string? SessionId { get; set; } = "";
+
     }
 }

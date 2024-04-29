@@ -53,13 +53,13 @@ namespace Ecommerce.Controllers
                     return NotFound();
                 int categoryid = categoryResponse.Data.Id;
                 var categoryProductsResponse = await _productRepository.GetProductsByCategory(categoryid);
-                var categoryProducts = new CategoryProductsRetrieveDto()
-                {
-                    Id = categoryid,
-                    Name = categoryResponse.Data.Name,
-                    DisplayOrder = categoryResponse.Data.DisplayOrder,
-                    Products = categoryProductsResponse.Data
-                };
+                //var categoryProducts = new CategoryProductsRetrieveDto()
+                //{
+                //    Id = categoryid,
+                //    Name = categoryResponse.Data.Name,
+                //    DisplayOrder = categoryResponse.Data.DisplayOrder,
+                //    Products = categoryProductsResponse.Data
+                //};
 
                 return categoryProductsResponse == null ? NotFound() : Ok(categoryProductsResponse);
             }
@@ -90,7 +90,7 @@ namespace Ecommerce.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<CategoryRetrieveDto>>> CreateProduct([FromBody] CategoryCreateDto categorydto)
+        public async Task<ActionResult<ServiceResponse<CategoryRetrieveDto>>> CreateCategory([FromBody] CategoryCreateDto categorydto)
         {
             try
             {

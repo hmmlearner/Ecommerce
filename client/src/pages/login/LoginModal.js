@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useImperativeHandle, forwardRef, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Login from './Login';
-import Typography from '@mui/material/Typography';
+import classes from "./LoginModal.module.css";
 import { Button, Modal } from '@material-ui/core'
 
 const style = {
@@ -45,8 +45,10 @@ const LoginModal = forwardRef(({ loginOpen }, ref) => {
                 ref={loginModal}
             >
                 <Box sx={style}>
-                    <Login loginClose={handleClose} />
-                    <Button onClick={handleClose}>Close</Button>
+                    <div className={classes.loginContainer}>
+                        <Button className={classes.closeButton} onClick={handleClose}>X</Button>
+                        <Login loginClose={handleClose} />
+                    </div>
                 </Box>
 
             </Modal>

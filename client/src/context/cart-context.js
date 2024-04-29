@@ -4,9 +4,11 @@ const CartContext = createContext({
     cartItems: [],
     totalItems: 0,
     totalPrice: 0,
-    addToCart: (item,quantity) => { },
+    shoppingCartId: 0,
+    addToCart: (item) => { },
     removeFromCart: (id) => { },
-    clearCart: () => { }
+    clearCart: () => { },
+    retrieveCartData: () => { },
 });
 
 export default CartContext;
