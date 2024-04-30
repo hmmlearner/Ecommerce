@@ -1,5 +1,6 @@
 /*import React from "react";*/
 import { useLocation, useNavigate } from 'react-router-dom';
+import classes from "./ProductCard.module.css";
 import {
   Button,
   Typography,
@@ -13,15 +14,17 @@ const ProductCard = ({ product }) => {
     const location = useLocation();
     let navigate = useNavigate();
     const currentPath = location.pathname // to get current route
-    const handleClick = (prodid) => {
-        //alert(prodid);
+    const handleClick = (e, prodid) => {
+        e.preventDefault();
         navigate(`${currentPath}/${prodid}`)
     }
 
-    console.log("inside productcard" + JSON.stringify(product));
+
+
+    console.log("inside productcard " + `/productimgs/${product.imageUrl}`);//JSON.stringify(product));
     return (
 
-    <Card sx={{ maxWidth: 345 }}>
+        <Card className={classes.productcard}>
       <CardMedia
                 sx={{ height: 140 }}
                 image="/static/images/cards/contemplative-reptile.jpg"
@@ -30,13 +33,18 @@ const ProductCard = ({ product }) => {
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
                     {product.title}
-        </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    {product.description}
-        </Typography>
+                </Typography>
+                <CardMedia
+                    className={classes.media}
+                    component="img"
+                    src={`/productimgs/${product.imageUrl}`}
+                    alt={product.title}
+                    title={product.title}
+                />
+  
       </CardContent>
       <CardActions>
-                <Button size="small" href={`${currentPath}/${product.id}`} >View</Button> 
+                <Button size="small" href={`${currentPath}/${product.id}`} onClick={(e) => handleClick(e, product.id)} >View</Button> 
         <Button size="small">Learn More</Button>
       </CardActions>
     </Card>

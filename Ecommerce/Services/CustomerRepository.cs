@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Ecommerce.Data;
 using Ecommerce.DTO.Customer;
+using Ecommerce.DTO.ShoppingCart;
 using Ecommerce.Interfaces;
 using Ecommerce.Models;
 using Microsoft.AspNetCore.Identity;
@@ -16,12 +17,14 @@ namespace Ecommerce.Services
         private readonly DataContext _dataContext;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CustomerRepository( DataContext dataContext, IMapper mapper, IConfiguration configuration)
+        public CustomerRepository( DataContext dataContext, IMapper mapper, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _dataContext = dataContext;
             _mapper = mapper;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<ServiceResponse<CustomerRetrieveDto>> CreateCustomer(CustomerCreateDto customerdto)
         {
@@ -40,9 +43,10 @@ namespace Ecommerce.Services
             customer.Saltkey = passwordSalt;
         
             _dataContext.Customers.Add(customer);
-            var customerid = await _dataContext.SaveChangesAsync();
+            await _dataContext.SaveChangesAsync();
             var newCustomer = await _dataContext.Customers.SingleOrDefaultAsync(x => x.Id == customer.Id);
             serviceReponse.Data = _mapper.Map<CustomerRetrieveDto>(newCustomer);
+            serviceReponse.Data.Token = CreateToken(newCustomer);
             return serviceReponse;
         }
 
@@ -140,6 +144,21 @@ namespace Ecommerce.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
             //_configuration
+        }
+
+
+        private int GetCustomerID()
+        {
+            return int.Parse(_httpContextAccessor.HttpContext!.User.FindFirstValue(ClaimTypes.NameIdentifier));
+        }
+
+        public async Task<ServiceResponse<CustomerRetrieveDto>> RetrieveCustomer()
+        {
+            var customerId = GetCustomerID();
+            var serviceResponse = new ServiceResponse<CustomerRetrieveDto>();
+            var customer = await _dataContext.Customers.SingleOrDefaultAsync(x => x.Id == customerId);
+            serviceResponse.Data = _mapper.Map<CustomerRetrieveDto>(customer);
+            return serviceResponse;
         }
 
         //public void CustomerLogout()

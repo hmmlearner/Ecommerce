@@ -4,8 +4,10 @@ import HomePage from "./pages/HomePage";
 import CartProvider from "./context/CartProvider";
 import CustomerProvider from "./context/CustomerProvider";
 import Product, { loader as productLoader } from "./pages/product/Product";
+import OrderConfirmation from "./pages/checkout/OrderConfirmation";
 import Category, { loader as productsLoader } from "./pages/Category";
 import NotFoundError from "./pages/errors/NotFoundError"
+import './App.css'
 
 
 const router = createBrowserRouter([
@@ -16,27 +18,14 @@ const router = createBrowserRouter([
         children: [
               { index: true, element: <HomePage /> },
             { path: "/category/:name", id: "category-products", element: <Category />, loader: productsLoader },
-            { path: "category/:name/:id", element: <Product />, loader: productLoader },
+            { path: "/category/:name/:id", element: <Product />, loader: productLoader },
+            { path: "/paymentconfirmation", element: <OrderConfirmation /> },
         ],
     },
 ]);
 
 
 
-
-//const router = createBrowserRouter(
-//    createRoutesFromElements(
-//        <Route element={<RootLayout />}>
-//            <Route index element={<HomePage />} />
-//            <Route
-//                path="/category/:name"
-//                loader={productsLoader}
-//                id= "category-products"
-//                element={<Category />}
-//            />
-//        </Route>
-//    )
-//);
 
 
 
@@ -50,11 +39,13 @@ function App() {
 
 
     return (
+        <div className="">
         <CustomerProvider>
         <CartProvider>
             <RouterProvider router={router} />
             </CartProvider>
-        </CustomerProvider>
+            </CustomerProvider>
+        </div>
     );
 }
 

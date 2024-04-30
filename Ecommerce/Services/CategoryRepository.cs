@@ -17,10 +17,10 @@ namespace Ecommerce.Services
             _dataContext = dataContext;
             _mapper = mapper;
         }
-        public async Task<ServiceResponse<CategoryRetrieveDto>> CreateCategory(CategoryCreateDto categoryDto)
+        public async Task<ServiceResponse<CategoryRetrieveDto>> CreateCategory(CategoryCreateDto product)
         {
             var serviceReponse = new ServiceResponse<CategoryRetrieveDto>();
-            var category = _mapper.Map<Category>(categoryDto);
+            var category = _mapper.Map<Category>(product);
             _dataContext.Categories.Add(category);
             await _dataContext.SaveChangesAsync();
             var newCategory = await _dataContext.Categories.SingleOrDefaultAsync(x => x.Id == category.Id);
@@ -32,7 +32,7 @@ namespace Ecommerce.Services
         {
             var serviceResponse = new ServiceResponse<List<CategoryRetrieveDto>>();
             var categories = await _dataContext.Categories.ToListAsync();
-            serviceResponse.Data = categories.Select(x => _mapper.Map<CategoryRetrieveDto>(x)).ToList(); ;
+            serviceResponse.Data = categories.Select(x => _mapper.Map<CategoryRetrieveDto>(x)).ToList(); 
             return serviceResponse;
         }
 

@@ -1,6 +1,8 @@
 ﻿using Ecommerce.DTO.Customer;
+using Ecommerce.DTO.ShoppingCart;
 using Ecommerce.Interfaces;
 using Ecommerce.Models;
+using Ecommerce.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
@@ -39,10 +41,17 @@ namespace Ecommerce.Controllers
         [HttpPost]
         [Route("Login")]
         //prathimac@gmail.com, Test_12
-        public async Task<ActionResult<ServiceResponse<CustomerRetrieveDto>>> CustomerLogin(string username, string password)
+        //public async Task<ActionResult<ServiceResponse<CustomerRetrieveDto>>> CustomerLogin(string username, string password)
+        public async Task<ActionResult<ServiceResponse<CustomerRetrieveDto>>> CustomerLogin([FromBody] LoginFormDto m)
         {
+            if(!m.IsValid())
+            {
+                return BadRequest("Invalid login data");
+            }
             try
             {
+                string username = m.Username;
+                string password = m.Password;
                 var loginCustomerReponse = await _customerRepository.CustomerLogin(username, password);
                 return (loginCustomerReponse == null) ? Unauthorized("Invalid Credentials") : Ok(loginCustomerReponse);
 
@@ -50,6 +59,21 @@ namespace Ecommerce.Controllers
             catch (Exception ex)
             {
                 return Unauthorized($"Invalid Credentials { ex.Message}");
+            }
+        }
+        [Route("retrievecustomer")]
+        [HttpGet]
+        public async Task<ActionResult<ServiceResponse<CustomerRetrieveDto>>> RetrieveCustomer()
+        {
+            try
+            {
+                var customerReponse = await _customerRepository.RetrieveCustomer();
+                return (customerReponse == null) ? BadRequest("Couldn't retrieve cart") : Ok(customerReponse);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Couldn't retrieve cart {ex.Message}");
             }
         }
 

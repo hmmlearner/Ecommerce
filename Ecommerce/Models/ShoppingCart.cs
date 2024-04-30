@@ -15,7 +15,9 @@ namespace Ecommerce.Models
         [ForeignKey("CustomerId")]
         [ValidateNever]
         public Customer customer { get; set; }
-        [NotMapped]
+
+        public string ShippingMethod { get; set; }
+
         public double CartTotal { get;set; }
 
 

@@ -7,10 +7,10 @@ namespace Ecommerce.DTO.Product
     public class ProductCreateDto
     {
         [Required]
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         [Required]
-        public string SKU { get; set; }
+        public string SKU { get; set; } = string.Empty;
 
         [Required]
         [Range(1, 10000)]
@@ -25,7 +25,7 @@ namespace Ecommerce.DTO.Product
         [Display(Name = "Was Price")]
         public double WasPrice { get; set; }
         [ValidateNever]
-        public string ImageUrl { get; set; }
+        public string ImageUrl { get; set; } = string.Empty;
 
         [ForeignKey("CategoryId")]
         [ValidateNever]

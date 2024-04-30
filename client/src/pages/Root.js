@@ -1,7 +1,7 @@
 import { Outlet, useRouteLoaderData } from "react-router-dom";
 import Header from "../components/Layout/Header";
 import axios, { AxiosError, AxiosResponse } from "axios";
-
+import classes from "./Root.module.css";
 
 const RootLayout = () => {
    // const categories = useRouteLoaderData();
@@ -9,7 +9,7 @@ const RootLayout = () => {
     return (
         <>
             <Header />
-            <main>
+            <main className={classes.container}>
                 <Outlet/>
             </main>
         </>

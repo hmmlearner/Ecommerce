@@ -24,7 +24,7 @@ namespace Ecommerce.Controllers
 
         [Route("AddToCart")]
         [HttpPost]
-        public async Task<ActionResult<ServiceResponse<ShoppingCart>>> AddToCart(int productId, int quantity)
+        public async Task<ActionResult<ServiceResponse<ShoppingCartRetrieveDto>>> AddToCart(int productId, int quantity)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Ecommerce.Controllers
         }
 
         [Route("DeleteItem")]
-        [HttpGet]
+        [HttpDelete]
         public async Task<ActionResult<ServiceResponse<ShoppingCartRetrieveDto>>> DeleteItemFromCart(int productId, int quantity)
         {
             try
